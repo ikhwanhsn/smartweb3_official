@@ -5,12 +5,13 @@ export async function cryptoPanicAll() {
     .get(`https://cryptopanic.com/api/v1/posts/?auth_token=${process.env.NEXT_PUBLIC_AUTH_TOKEN_CRYPTOPANIC}`, {
     // params: {
     //     start: "1",
-    //     limit: "10",
+    //     limit: "50",
     // },
     })
     .then((response: any) => {
     // console.log(response.data.results);
-    return response.data.results;
+    // return response.data.results;
+    return response.data;
     })
     .catch((error: any) => {
     console.log(error);

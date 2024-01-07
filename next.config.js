@@ -4,9 +4,9 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
-module.exports = {
-  reactStrictMode: true,
-  env: {
-    BASE_URL: process.env.BASE_URL,
-  }
-}
+// module.exports = {
+//   reactStrictMode: true,
+//   env: {
+//     BASE_URL: process.env.BASE_URL,
+//   }
+// }

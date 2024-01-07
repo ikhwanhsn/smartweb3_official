@@ -19,7 +19,7 @@ export async function getServerSideProps(){
   
     return {
       props: {
-        news: result.data,
+        news: result.data.results,
         revalidate: 10,
       },
     }
