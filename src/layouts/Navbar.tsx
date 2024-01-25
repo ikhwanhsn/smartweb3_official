@@ -1,13 +1,14 @@
 import Image from "next/image";
 import logo from "../../public/img/logo.jpg";
 import { TbMenu2 } from "react-icons/tb";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
     <section>
       <div className="navbar pl-4 md:px-24 bg-bgColor text-textColor fixed top-0 z-50">
         <div className="navbar-start">
-          <TbMenu2 className="scale-125 md:hidden mr-3"/>
+          <TbMenu2 className="scale-125 md:hidden mr-3" />
           <Image
             src={logo}
             width={40}
@@ -22,16 +23,16 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li className="hover:opacity-70">
-              <a>News</a>
+              <Link href="/news">News</Link>
             </li>
             <li className="hover:opacity-70">
-              <a>Analysis</a>
+              <Link href="/analysis">Analysis</Link>
             </li>
             <li className="hover:opacity-70">
-              <a>Tools</a>
+              <Link href="/tools">Tools</Link>
             </li>
             <li className="hover:opacity-70">
-              <a>Learn</a>
+              <Link href="/about">About</Link>
             </li>
           </ul>
         </div>
