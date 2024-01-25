@@ -2,25 +2,13 @@ import CardNews from "@/components/CardNews";
 import Navbar from "@/layouts/Navbar";
 import { newsType } from "@/types/news.type";
 
-const NewsPage = ({news}: {news: newsType[]}) => {
-    return ( 
-        <main>
-            <Navbar/>
-            <CardNews news={news}/>
-        </main>
-     );
-}
- 
-export default NewsPage;
+const NewsPage = () => {
+  return (
+    <main>
+      <Navbar />
+      <CardNews news={[]} />
+    </main>
+  );
+};
 
-export async function getServerSideProps(){
-    let res = await fetch('http://localhost:3000/api/cryptopanic');
-    const result = await res.json();
-  
-    return {
-      props: {
-        news: result.data.results,
-        revalidate: 10,
-      },
-    }
-  }
+export default NewsPage;
