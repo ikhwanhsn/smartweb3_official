@@ -1,39 +1,13 @@
-import { cryptoPanicAll } from "@/lib/cryptoPanic/service";
-import { newsType } from "@/types/news.type";
+import { fetcher } from "@/libs/swr/fetcher";
 import { useEffect, useState } from "react";
 import { BsFilter } from "react-icons/bs";
-const axios = require("axios");
 import { MdOutlineShowChart } from "react-icons/md";
+import useSWR from "swr";
 
-const CardNews = ({ news }: { news: newsType[] }) => {
-  // const [articleName, setArticleName] = useState([]);
-  // const baseURL: string = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest';
-
-  // useEffect(() => {
-  //   axios
-  //     .get(baseURL, {
-  //       params: {
-  //         start: "1",
-  //         limit: "10",
-  //       },
-  //       headers: {
-  //         "X-CMC_PRO_API_KEY": process.env.NEXT_PUBLIC_APIKEY_COINMARKETCAP,
-  //         "Accept": "application/json",
-  //         // "Accept-Encoding": ["deflate", "gzip"]
-  //       },
-  //     })
-  //     .then((response: any) => {
-  //       setArticleName(response.data.data[0].title);
-  //       console.log(response.data.data[0].title);
-  //       console.log(response.data.data[0]);
-  //     })
-  //     .catch((error: any) => {
-  //       console.log(error);
-  //     })
-  //   }, []);
-
+const CardNews = () => {
+  const { data, error, isLoading } = useSWR("/api/news", fetcher);
   return (
-    <section>
+    <section className="">
       <div className="card pb-3 lg:w-3/6 w-full md:border-2 shadow-md shadow-gray-500 mx-auto md:mt-20 mt-16">
         <section className="py-3 md:px-5 px-4 flex justify-between items-center">
           <h2 className="text-xl font-bold">Latest News</h2>
@@ -47,7 +21,15 @@ const CardNews = ({ news }: { news: newsType[] }) => {
           </section>
         </section>
         <hr className="text-bgColor" />
-        <ContentNews data={news} />
+        {isLoading && <p className="m-3">Loading...</p>}
+        {!isLoading && data && <ContentNews data={data.data.results} />}
+        {!isLoading && (
+          <section className="text-center w-full mb-5">
+            <button className="py-1 px-3 rounded-md border shadow-md hover:bg-bgColor hover:text-textColor border-black text-sm">
+              Load more...
+            </button>
+          </section>
+        )}
       </div>
     </section>
   );
@@ -55,10 +37,10 @@ const CardNews = ({ news }: { news: newsType[] }) => {
 
 export default CardNews;
 
-const ContentNews = ({ data }: { data: newsType[] }) => {
+export const ContentNews = ({ data }: { data: any }) => {
   return (
     <div className="px-4 md:px-5 pt-3">
-      {data.length > 0 ? (
+      {data.length > 0 &&
         data.map((article: any) => {
           const { publishTime, day, month, year } = timeSetting(article);
 
@@ -70,22 +52,17 @@ const ContentNews = ({ data }: { data: newsType[] }) => {
                 target="_blank"
               >
                 <p className="truncate">{article.title}</p>
-                <small className="flex items-center gap-1">{`${
-                  article.domain.charAt(0).toUpperCase() +
-                  article.domain.slice(1)
-                } - ${day} ${month} ${year} - ${publishTime}`}
-                <MdOutlineShowChart className="text-red-500"/>
+                <small className="flex items-center gap-1">
+                  {`${
+                    article.domain.charAt(0).toUpperCase() +
+                    article.domain.slice(1)
+                  } - ${day} ${month} ${year} - ${publishTime}`}
+                  <MdOutlineShowChart className="text-red-500" />
                 </small>
               </a>
             </section>
           );
-        })
-      ) : (
-        <p>Loading...</p>
-      )}
-      <section className="text-center w-full mb-5">
-        <button className="py-1 px-3 rounded-md border shadow-md hover:bg-bgColor hover:text-textColor border-black text-sm">Load more...</button>
-      </section>
+        })}
     </div>
   );
 };
@@ -112,7 +89,9 @@ export const timeSetting = (article: any) => {
   day === timeNow.getDate() ? (day = "Today") : (day = "Yesterday");
   let month: string = date.toLocaleDateString("en-US", { month: "short" });
   let year: number | string = date.getFullYear();
-  day === "Today" || day === "Yesterday" ? (month = '', year = '') : (month = month, year = year);
+  day === "Today" || day === "Yesterday"
+    ? ((month = ""), (year = ""))
+    : ((month = month), (year = year));
 
   return { publishTime, day, month, year };
 };

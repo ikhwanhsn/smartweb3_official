@@ -21,7 +21,7 @@ const Navbar = () => {
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="flex gap-7">
             <li className="hover:opacity-70">
               <Link href="/news">News</Link>
             </li>
