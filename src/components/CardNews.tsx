@@ -1,11 +1,21 @@
 import { fetcher } from "@/libs/swr/fetcher";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BsFilter } from "react-icons/bs";
 import { MdOutlineShowChart } from "react-icons/md";
 import useSWR from "swr";
 
 const CardNews = () => {
-  const { data, error, isLoading } = useSWR("/api/news", fetcher);
+  const [page, setPage] = useState(1);
+  const [news, setNews] = useState([]);
+  const { data, error, isLoading } = useSWR(`/api/news/${page}`, fetcher);
+  useEffect(() => {
+    if (data) {
+      setNews((prevState): any => prevState.concat(data.data.results));
+    }
+  }, [data]);
+  const nextNews = () => {
+    setPage(page + 1);
+  };
   return (
     <section className="">
       <div className="card pb-3 lg:w-3/6 w-full md:border-2 shadow-md shadow-gray-500 mx-auto md:mt-20 mt-16">
@@ -22,10 +32,18 @@ const CardNews = () => {
         </section>
         <hr className="text-bgColor" />
         {isLoading && <p className="m-3">Loading...</p>}
-        {!isLoading && data && <ContentNews data={data.data.results} />}
+        {!isLoading && <ContentNews data={news} />}
+        {/* {isLoading ? (
+          <p className="m-3">Loading...</p>
+        ) : (
+          <ContentNews data={news} />
+        )} */}
         {!isLoading && (
           <section className="text-center w-full mb-5">
-            <button className="py-1 px-3 rounded-md border shadow-md hover:bg-bgColor hover:text-textColor border-black text-sm">
+            <button
+              className="py-1 px-3 rounded-md border shadow-md hover:bg-bgColor hover:text-textColor border-black text-sm"
+              onClick={() => nextNews()}
+            >
               Load more...
             </button>
           </section>

@@ -10,9 +10,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  const page = req.query.page;
   const data = await axios
     .get(
-      `https://cryptopanic.com/api/v1/posts/?auth_token=${process.env.NEXT_PUBLIC_API_KEY_CRYPTO_PANIC}`
+      `https://cryptopanic.com/api/v1/posts/?auth_token=${
+        process.env.NEXT_PUBLIC_API_KEY_CRYPTO_PANIC
+      }&page=${page ? page : 1}`
     )
     .then(function (response: any) {
       return response.data;
