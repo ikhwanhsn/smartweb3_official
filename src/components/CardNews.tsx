@@ -6,11 +6,11 @@ import useSWR from "swr";
 
 const CardNews = () => {
   const [page, setPage] = useState(1);
-  const [news, setNews] = useState([]);
+  const [newsData, setNewsData] = useState<any>([]);
   const { data, error, isLoading } = useSWR(`/api/news/${page}`, fetcher);
   useEffect(() => {
     if (data) {
-      setNews((prevState): any => prevState.concat(data.data.results));
+      setNewsData([...newsData, ...data.data.results]);
     }
   }, [data]);
   const nextNews = () => {
@@ -18,7 +18,7 @@ const CardNews = () => {
   };
   return (
     <section className="">
-      <div className="card pb-3 lg:w-3/6 w-full md:border-2 shadow-md shadow-gray-500 mx-auto md:mt-20 mt-16">
+      <div className="card pb-3 min-h-screen lg:w-3/6 w-full md:border-2 shadow-md shadow-gray-500 mx-auto md:mt-20 mt-16">
         <section className="py-3 md:px-5 px-4 flex justify-between items-center">
           <h2 className="text-xl font-bold">Latest News</h2>
           <section className="flex items-center gap-5">
@@ -31,20 +31,17 @@ const CardNews = () => {
           </section>
         </section>
         <hr className="text-bgColor" />
-        {isLoading && <p className="m-3">Loading...</p>}
-        {!isLoading && <ContentNews data={news} />}
-        {/* {isLoading ? (
-          <p className="m-3">Loading...</p>
-        ) : (
-          <ContentNews data={news} />
-        )} */}
-        {!isLoading && (
+        {newsData && <ContentNews data={newsData} />}
+        {isLoading && page === 1 && (
+          <p className="px-4 md:px-5 pt-1">Loading...</p>
+        )}
+        {newsData.length > 0 && (
           <section className="text-center w-full mb-5">
             <button
               className="py-1 px-3 rounded-md border shadow-md hover:bg-bgColor hover:text-textColor border-black text-sm"
               onClick={() => nextNews()}
             >
-              Load more...
+              {isLoading ? "Loading..." : "Load More"}
             </button>
           </section>
         )}
