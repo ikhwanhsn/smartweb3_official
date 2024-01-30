@@ -2,8 +2,28 @@ import Image from "next/image";
 import logo from "../../public/img/logo.jpg";
 import { TbMenu2 } from "react-icons/tb";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
+  const { pathname } = useRouter();
+  const dataLi = [
+    {
+      name: "News",
+      link: "/news",
+    },
+    {
+      name: "Analysis",
+      link: "/analysis",
+    },
+    {
+      name: "Tools",
+      link: "/tools",
+    },
+    {
+      name: "About",
+      link: "/about",
+    },
+  ];
   return (
     <section>
       <div className="navbar pl-4 md:px-24 bg-bgColor text-textColor fixed top-0 z-50">
@@ -22,18 +42,16 @@ const Navbar = () => {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="flex gap-7">
-            <li className="hover:opacity-70">
-              <Link href="/news">News</Link>
-            </li>
-            <li className="hover:opacity-70">
-              <Link href="/analysis">Analysis</Link>
-            </li>
-            <li className="hover:opacity-70">
-              <Link href="/tools">Tools</Link>
-            </li>
-            <li className="hover:opacity-70">
-              <Link href="/about">About</Link>
-            </li>
+            {dataLi.map((item, index) => (
+              <li
+                key={index}
+                className={`hover:opacity-70 ${
+                  pathname === item.link ? "bg-red-500" : ""
+                }`}
+              >
+                <Link href={item.link}>{item.name}</Link>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="navbar-end">

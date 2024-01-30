@@ -7,12 +7,19 @@ import useSWR from "swr";
 const CardNews = () => {
   const [page, setPage] = useState(1);
   const [newsData, setNewsData] = useState<any>([]);
+  const [filterData, setFilterData] = useState<any>([]);
   const { data, error, isLoading } = useSWR(`/api/news/${page}`, fetcher);
   useEffect(() => {
     if (data) {
       setNewsData([...newsData, ...data.data.results]);
     }
   }, [data]);
+  const inputFilter = (e: any) => {
+    const filter = newsData.filter((item: any) =>
+      item.title.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilterData(filter);
+  };
   const nextNews = () => {
     setPage(page + 1);
   };
@@ -25,17 +32,20 @@ const CardNews = () => {
             <input
               type="search"
               placeholder="Search news..."
+              onChange={(e) => inputFilter(e)}
               className="input input-bordered input-bgColor border-gray-700 shadow-sm input-sm w-full max-w-xs"
             />
             <BsFilter className="scale-[2] cursor-pointer hover:opacity-70" />
           </section>
         </section>
         <hr className="text-bgColor" />
-        {newsData && <ContentNews data={newsData} />}
+        {newsData && (
+          <ContentNews data={filterData.length > 0 ? filterData : newsData} />
+        )}
         {isLoading && page === 1 && (
           <p className="px-4 md:px-5 pt-1">Loading...</p>
         )}
-        {newsData.length > 0 && (
+        {filterData.length === 0 && newsData.length > 0 && (
           <section className="text-center w-full mb-5">
             <button
               className="py-1 px-3 rounded-md border shadow-md hover:bg-bgColor hover:text-textColor border-black text-sm"

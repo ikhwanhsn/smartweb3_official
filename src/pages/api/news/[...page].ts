@@ -26,6 +26,6 @@ export default async function handler(
   if (data) {
     res.status(200).json({ data: data });
   } else {
-    res.status(500).json({ data: data });
+    console.log("Error");
   }
 }
