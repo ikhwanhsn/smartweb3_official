@@ -1,24 +1,41 @@
 import { fetcher } from "@/libs/swr/fetcher";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsFilter } from "react-icons/bs";
-import { MdOutlineShowChart } from "react-icons/md";
 import useSWR from "swr";
 
 const CardNews = () => {
   const [page, setPage] = useState(1);
   const [newsData, setNewsData] = useState<any>([]);
   const [filterData, setFilterData] = useState<any>([]);
+  const [dataNotFound, setDataNotFound] = useState(false);
   const { data, error, isLoading } = useSWR(`/api/news/${page}`, fetcher);
+
   useEffect(() => {
     if (data) {
       setNewsData([...newsData, ...data.data.results]);
     }
   }, [data]);
+
   const inputFilter = (e: any) => {
     const filter = newsData.filter((item: any) =>
       item.title.toLowerCase().includes(e.target.value.toLowerCase())
     );
+    if (filter.length === 0) {
+      setDataNotFound(true);
+    } else {
+      setDataNotFound(false);
+    }
     setFilterData(filter);
+  };
+
+  const handleRefresh = () => {
+    setPage(1);
+    setFilterData([]);
+    setDataNotFound(false);
+    setNewsData([]);
+    setTimeout(() => {
+      setNewsData([...newsData, ...data.data.results]);
+    }, 500);
   };
   const nextNews = () => {
     setPage(page + 1);
@@ -28,6 +45,7 @@ const CardNews = () => {
       <div className="card pb-3 min-h-screen lg:w-3/6 w-full md:border-2 shadow-md shadow-gray-500 mx-auto md:mt-20 mt-16">
         <section className="py-3 md:px-5 px-4 flex justify-between items-center">
           <h2 className="text-xl font-bold">Latest News</h2>
+          <button onClick={() => handleRefresh()}>Refresh</button>
           <section className="flex items-center gap-5">
             <input
               type="search"
@@ -39,22 +57,25 @@ const CardNews = () => {
           </section>
         </section>
         <hr className="text-bgColor" />
-        {newsData && (
+        {newsData && dataNotFound === false && (
           <ContentNews data={filterData.length > 0 ? filterData : newsData} />
         )}
+        {dataNotFound && <p className="mt-3 mx-auto text-sm">News Not Found</p>}
         {isLoading && page === 1 && (
           <p className="px-4 md:px-5 pt-1">Loading...</p>
         )}
-        {filterData.length === 0 && newsData.length > 0 && (
-          <section className="text-center w-full mb-5">
-            <button
-              className="py-1 px-3 rounded-md border shadow-md hover:bg-bgColor hover:text-textColor border-black text-sm"
-              onClick={() => nextNews()}
-            >
-              {isLoading ? "Loading..." : "Load More"}
-            </button>
-          </section>
-        )}
+        {filterData.length === 0 &&
+          newsData.length > 0 &&
+          dataNotFound === false && (
+            <section className="text-center w-full mb-5">
+              <button
+                className="py-1 px-3 rounded-md border shadow-md hover:bg-bgColor hover:text-textColor border-black text-sm"
+                onClick={() => nextNews()}
+              >
+                {isLoading ? "Loading..." : "Load More"}
+              </button>
+            </section>
+          )}
       </div>
     </section>
   );
@@ -82,7 +103,6 @@ export const ContentNews = ({ data }: { data: any }) => {
                     article.domain.charAt(0).toUpperCase() +
                     article.domain.slice(1)
                   } - ${day} ${month} ${year} - ${publishTime}`}
-                  <MdOutlineShowChart className="text-red-500" />
                 </small>
               </a>
             </section>
