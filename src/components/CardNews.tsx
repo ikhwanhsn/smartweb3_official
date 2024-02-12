@@ -2,6 +2,7 @@ import { fetcher } from "@/libs/swr/fetcher";
 import { useEffect, useState } from "react";
 import { BsFilter } from "react-icons/bs";
 import useSWR from "swr";
+import { TbRefresh } from "react-icons/tb";
 
 const CardNews = () => {
   const [page, setPage] = useState(1);
@@ -34,7 +35,7 @@ const CardNews = () => {
     setDataNotFound(false);
     setNewsData([]);
     setTimeout(() => {
-      setNewsData([...newsData, ...data.data.results]);
+      setNewsData([...data.data.results]);
     }, 500);
   };
   const nextNews = () => {
@@ -44,8 +45,17 @@ const CardNews = () => {
     <section className="">
       <div className="card pb-3 min-h-screen lg:w-3/6 w-full md:border-2 shadow-md shadow-gray-500 mx-auto md:mt-20 mt-16">
         <section className="py-3 md:px-5 px-4 flex justify-between items-center">
-          <h2 className="text-xl font-bold">Latest News</h2>
-          <button onClick={() => handleRefresh()}>Refresh</button>
+          <section className="flex gap-3">
+            <h2 className="text-xl font-bold">Latest News</h2>
+            <button
+              onClick={() => handleRefresh()}
+              className="mt-1 hover:scale-110"
+            >
+              <TbRefresh
+                className={`${newsData.length === 0 ? "animate-spin" : ""}`}
+              />
+            </button>
+          </section>
           <section className="flex items-center gap-5">
             <input
               type="search"
