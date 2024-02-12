@@ -14,6 +14,9 @@ const CardNews = () => {
   useEffect(() => {
     if (data) {
       setNewsData([...newsData, ...data.data.results]);
+      // if (newsData) {
+      //   console.log(newsData[3].currencies[0].code);
+      // }
     }
   }, [data]);
 
@@ -43,7 +46,7 @@ const CardNews = () => {
   };
   return (
     <section className="">
-      <div className="card pb-3 min-h-screen lg:w-3/6 w-full md:border-2 shadow-md shadow-gray-500 mx-auto md:mt-20 mt-16">
+      <div className="card pb-3 min-h-screen lg:w-3/6 w-full md:border-2 shadow-md mx-auto md:mt-20 mt-16">
         <section className="py-3 md:px-5 px-4 flex justify-between items-center">
           <section className="flex gap-3">
             <h2 className="text-xl font-bold">Latest News</h2>
@@ -61,7 +64,7 @@ const CardNews = () => {
               type="search"
               placeholder="Search news..."
               onChange={(e) => inputFilter(e)}
-              className="input input-bordered input-bgColor border-gray-700 shadow-sm input-sm w-full max-w-xs"
+              className="input input-bordered input-bgColor  shadow-sm input-sm w-full max-w-xs"
             />
             <BsFilter className="scale-[2] cursor-pointer hover:opacity-70" />
           </section>
@@ -109,10 +112,18 @@ export const ContentNews = ({ data }: { data: any }) => {
               >
                 <p className="truncate">{article.title}</p>
                 <small className="flex items-center gap-1">
-                  {`${
-                    article.domain.charAt(0).toUpperCase() +
-                    article.domain.slice(1)
-                  } - ${day} ${month} ${year} - ${publishTime}`}
+                  <span className=" text-gray-700 font-semibold">
+                    {`${
+                      article.domain.charAt(0).toUpperCase() +
+                      article.domain.slice(1)
+                    }`}{" "}
+                  </span>
+                  {` - ${day} ${month} ${year} - ${publishTime}`}
+                  <span className="text-green-600 font-semibold">
+                    {article.currencies
+                      ? ` - ${article.currencies.map((el: any) => el.code)}`
+                      : ""}
+                  </span>
                 </small>
               </a>
             </section>
