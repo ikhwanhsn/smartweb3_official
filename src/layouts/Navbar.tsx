@@ -45,8 +45,8 @@ const Navbar = () => {
             {dataLi.map((item, index) => (
               <li
                 key={index}
-                className={`hover:opacity-70 ${
-                  pathname === item.link ? "bg-red-500" : ""
+                className={`hover:opacity-75 ${
+                  pathname !== item.link ? "opacity-50" : ""
                 }`}
               >
                 <Link href={item.link}>{item.name}</Link>

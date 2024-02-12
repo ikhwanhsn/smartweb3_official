@@ -1,3 +1,4 @@
+import ScrollToTop from "@/components/ScrollToTop";
 import Navbar from "./Navbar";
 
 const AppShell = ({ children }: { children: React.ReactNode }) => {
@@ -5,6 +6,7 @@ const AppShell = ({ children }: { children: React.ReactNode }) => {
     <main>
       <Navbar />
       {children}
+      <ScrollToTop />
     </main>
   );
 };
