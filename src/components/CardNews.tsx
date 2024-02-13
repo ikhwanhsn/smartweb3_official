@@ -14,9 +14,6 @@ const CardNews = () => {
   useEffect(() => {
     if (data) {
       setNewsData([...newsData, ...data.data.results]);
-      // if (newsData) {
-      //   console.log(newsData[3].currencies[0].code);
-      // }
     }
   }, [data]);
 

@@ -1,7 +1,11 @@
+import ButtonMenuAnalysis from "@/components/ButtonMenuAnalysis";
+import CryptoRunPrice from "@/components/CryptoRunPrice";
+
 const AnalysisPage = () => {
   return (
-    <main>
-      <h1>Analysis</h1>
+    <main className="mt-16">
+      <CryptoRunPrice />
+      <ButtonMenuAnalysis />
     </main>
   );
 };
