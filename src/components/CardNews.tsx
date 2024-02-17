@@ -42,8 +42,8 @@ const CardNews = () => {
     setPage(page + 1);
   };
   return (
-    <section className="">
-      <div className="card pb-3 min-h-screen lg:w-3/6 w-full md:border-2 shadow-md mx-auto md:mt-20 mt-16">
+    <section className=" md:pt-20 pt-16">
+      <div className="card pb-3 min-h-screen lg:w-3/6 w-full md:border-2 shadow-md mx-auto">
         <section className="py-3 md:px-5 px-4 flex justify-between items-center">
           <section className="flex gap-3">
             <h2 className="text-xl font-bold">Latest News</h2>

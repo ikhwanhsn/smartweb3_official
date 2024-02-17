@@ -2,7 +2,7 @@ import CardNews from "@/components/CardNews";
 
 const NewsPage = () => {
   return (
-    <main>
+    <main className="">
       <CardNews />
     </main>
   );

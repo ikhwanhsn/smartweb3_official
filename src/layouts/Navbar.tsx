@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "../../public/img/logo.jpg";
+import logo from "../../public/img/logo.jpeg";
 import { TbMenu2 } from "react-icons/tb";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -34,7 +34,7 @@ const Navbar = () => {
             width={40}
             height={40}
             alt="SmartWeb3 logo"
-            className="rounded-full mr-3 hidden lg:block"
+            className="rounded-full mr-2 hidden lg:block"
           />
           <a className="text-xl font-bold" href="/">
             SmartWeb3
