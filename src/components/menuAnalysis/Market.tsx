@@ -2,7 +2,6 @@ import { fetcher } from "@/libs/swr/fetcher";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { FaExchangeAlt } from "react-icons/fa";
-import { FiTrendingUp, FiTrendingDown } from "react-icons/fi";
 
 const dataThead = [
   "No",
@@ -12,6 +11,7 @@ const dataThead = [
   "Volume",
   "Supply",
   "Limited",
+  "Added",
   "Change ",
 ];
 
@@ -33,17 +33,17 @@ const Market = () => {
     }
   }, [data]);
   return (
-    <table className="table-auto w-full border rounded-md">
+    <table className="table table-auto w-full rounded-md text-base">
       <thead className="bg-gray-100">
         <tr>
           {dataThead.map((item) => (
-            <th key={item} className="py-2 relative border-2">
+            <th key={item} className="text-sm">
               {item}
               {item === "Change " && (
                 <>
                   {dataChange[percentChange]}
                   <FaExchangeAlt
-                    className="absolute top-3 cursor-pointer right-4 scale-75"
+                    className="absolute top-4 cursor-pointer right-6 scale-75"
                     onClick={() =>
                       percentChange > dataChange.length - 2
                         ? setPercentChange(0)
@@ -74,39 +74,39 @@ const Market = () => {
                 : percentChange === 4
                 ? item.quote.USD.percent_change_60d
                 : item.quote.USD.percent_change_90d;
+            const dateString = item.date_added;
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+
             return (
-              <tr key={item.cmc_rank} className="text-center">
-                <td className="py-2 w-14 border-l-2 border-r-2">
-                  {item.cmc_rank}.
-                </td>
-                <td className={`py-2 text-start w-64 border-r-2 px-3`}>
+              <tr
+                key={item.cmc_rank}
+                className={` ${
+                  item.cmc_rank % 2 === 0 ? "hover:bg-gray-50" : "bg-gray-50"
+                }`}
+              >
+                <td>{item.cmc_rank}.</td>
+                <td>
                   {item.name}
+                  <span className="ml-1 text-gray-400">{item.symbol}</span>
                 </td>
-                <td
-                  className={`py-2 border-r-2 w-40 ${
-                    percentage < 0 ? "text-red-500" : "text-green-500"
-                  }`}
-                >
-                  ${formatCurrency(item.quote.USD.price)}
-                </td>
-                <td
-                  className={`py-2 border-r-2 w-40 ${
-                    percentage < 0 ? "text-red-500" : "text-green-500"
-                  }`}
-                >
-                  ${formatCurrency(item.quote.USD.market_cap)}
-                </td>
-                <td
-                  className={`py-2 border-r-2 w-44 flex gap-1 justify-center items-center ${
-                    item.quote.USD.volume_change_24h < 0
-                      ? "text-red-500"
-                      : "text-green-500"
-                  }`}
-                >
+                <td>${formatCurrency(item.quote.USD.price)}</td>
+                <td>${formatCurrency(item.quote.USD.market_cap)}</td>
+                <td className={`flex gap-1`}>
                   ${formatCurrency(item.quote.USD.volume_24h)}
-                  <sup>{item.quote.USD.volume_change_24h.toFixed(0)}%</sup>
+                  <sup
+                    className={`mt-3 ${
+                      item.quote.USD.volume_change_24h < 0
+                        ? "text-red-500"
+                        : "text-green-500"
+                    }`}
+                  >
+                    {item.quote.USD.volume_change_24h.toFixed(0)}%
+                  </sup>
                 </td>
-                <td className="py-2 border-r-2 w-40">
+                <td>
                   <div
                     className="tooltip"
                     data-tip={`${
@@ -116,18 +116,20 @@ const Market = () => {
                     } ${formatCurrency(item.circulating_supply)}`}
                   >
                     <progress
-                      className="progress w-24"
+                      className="progress w-20"
                       value={item.circulating_supply}
                       max={item.max_supply}
                     ></progress>
                   </div>
                 </td>
-                <td className="py-2 border-r-2 w-24">
-                  {item.infinite_supply ? "❌" : "✅"}
+                <td className="py-2">{item.infinite_supply ? "❌" : "✅"}</td>
+                <td>
+                  <div className="tooltip" data-tip={`${day}/${month}/${year}`}>
+                    {year}
+                  </div>
                 </td>
-
                 <td
-                  className={`w-40 border-r-2 ${
+                  className={` ${
                     percentage < 0 ? "text-red-500" : "text-green-500"
                   }`}
                 >

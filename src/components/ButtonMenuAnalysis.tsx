@@ -19,27 +19,27 @@ const dataActiveMenu = [
   },
   {
     title: "Data",
-    content: <CoomingSoon style={`mt-3`} />,
+    content: <CoomingSoon style={`mt-12`} />,
   },
   {
     title: "Signal",
-    content: <CoomingSoon style={`mt-3`} />,
+    content: <CoomingSoon style={`mt-12`} />,
   },
   {
     title: "Trend",
-    content: <CoomingSoon style={`mt-3`} />,
+    content: <CoomingSoon style={`mt-12`} />,
   },
   {
     title: "Narasi",
-    content: <CoomingSoon style={`mt-3`} />,
+    content: <CoomingSoon style={`mt-12`} />,
   },
   {
     title: "Research",
-    content: <CoomingSoon style={`mt-3`} />,
+    content: <CoomingSoon style={`mt-12`} />,
   },
   {
     title: "Others",
-    content: <CoomingSoon style={`mt-3`} />,
+    content: <CoomingSoon style={`mt-12`} />,
   },
 ];
 
@@ -47,11 +47,11 @@ const ButtonMenuAnalysis = () => {
   const [isActiveButton, setIsActiveButton] = useState("Market");
   return (
     <section>
-      <section className="mt-3  flex justify-center">
+      <section className="mt-3 flex justify-center">
         {dataButton.map((item) => (
           <ButtonMenu
             key={item}
-            style={isActiveButton === item ? "bg-blue-100" : ""}
+            style={isActiveButton === item ? "bg-bgColor text-textColor" : ""}
             onclick={() => setIsActiveButton(item)}
           >
             {item}
@@ -81,7 +81,7 @@ type ButtonMenuProps = {
 const ButtonMenu = ({ onclick, children, style }: ButtonMenuProps) => {
   return (
     <button
-      className={`px-5 py-2 border hover:bg-blue-100 transition-all ${style}`}
+      className={`px-5 py-2 border hover:text-accentColor transition-all ${style}`}
       onClick={onclick}
     >
       {children}
