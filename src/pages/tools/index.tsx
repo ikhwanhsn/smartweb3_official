@@ -1,7 +1,9 @@
+import CoomingSoon from "@/components/CoomingSoon";
+
 const ToolsPage = () => {
   return (
-    <main>
-      <h1>Tools</h1>
+    <main className="mt-16 pt-24">
+      <CoomingSoon />
     </main>
   );
 };
