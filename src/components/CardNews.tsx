@@ -75,59 +75,8 @@ const CardNews = () => {
           <ContentNews data={filterData.length > 0 ? filterData : newsData} />
         )}
         {dataNotFound && <p className="mt-3 mx-auto text-sm">News Not Found</p>}
-        {(isLoading && page === 1) ||
-          (isRefresh && (
-            <section>
-              <section>
-                <h1 className="mx-5 mt-2 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-              <section>
-                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-              <section>
-                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-              <section>
-                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-              <section>
-                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-              <section>
-                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-              <section>
-                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-              <section>
-                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-              <section>
-                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-              <section>
-                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-              <section>
-                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-              <section>
-                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
-                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
-              </section>
-            </section>
-          ))}
+        {isRefresh && newsSkeleton()}
+        {isLoading && page === 1 && newsSkeleton()}
         {filterData.length === 0 &&
           newsData.length > 0 &&
           dataNotFound === false && (
@@ -211,4 +160,16 @@ export const timeSetting = (article: any) => {
     : ((month = month), (year = year));
 
   return { publishTime, day, month, year };
+};
+
+const newsSkeleton = () => {
+  const numSections = 12;
+  const skeletonSections = Array.from({ length: numSections }, (_, index) => (
+    <section key={index}>
+      <h1 className={`mx-5 mt-${index === 0 ? 2 : 3} h-5 w-auto skeleton`}></h1>
+      <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+    </section>
+  ));
+
+  return <section>{skeletonSections}</section>;
 };
