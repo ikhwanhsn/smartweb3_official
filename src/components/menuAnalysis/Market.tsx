@@ -28,9 +28,9 @@ const Market = () => {
     if (data) {
       setdataCrypto([...dataCrypto, data]);
     }
-    if (dataCrypto.length > 0) {
-      console.log(dataCrypto[0].data.data);
-    }
+    // if (dataCrypto.length > 0) {
+    //   console.log(dataCrypto[0].data.data);
+    // }
   }, [data]);
   return (
     <table className="table table-auto w-full rounded-md text-base">
@@ -43,7 +43,7 @@ const Market = () => {
                 <>
                   {dataChange[percentChange]}
                   <FaExchangeAlt
-                    className="absolute top-4 cursor-pointer right-6 scale-75"
+                    className="absolute top-4 cursor-pointer right-5 scale-75"
                     onClick={() =>
                       percentChange > dataChange.length - 2
                         ? setPercentChange(0)
@@ -57,6 +57,7 @@ const Market = () => {
         </tr>
       </thead>
       <tbody>
+        {isLoading && skeletonCrypto()}
         {dataCrypto.length > 0 &&
           dataCrypto[0].data.data.map((item: any) => {
             const circulatingPercentage =
@@ -171,3 +172,24 @@ function formatCurrency(value: number) {
   }
   return value.toFixed(2);
 }
+
+const skeletonCrypto = () => {
+  const numRows = 10;
+  const numCols = 9;
+
+  const skeletonRows = Array.from({ length: numRows }, () => (
+    <tr className="h-12">
+      {Array.from({ length: numCols }, (_, index) => (
+        <td key={index}>
+          <p
+            className={`skeleton h-6 w-${
+              index === 0 ? 5 : index === 6 ? 8 : 24
+            }`}
+          ></p>
+        </td>
+      ))}
+    </tr>
+  ));
+
+  return <>{skeletonRows}</>;
+};

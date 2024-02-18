@@ -81,7 +81,7 @@ type ButtonMenuProps = {
 const ButtonMenu = ({ onclick, children, style }: ButtonMenuProps) => {
   return (
     <button
-      className={`px-5 py-2 border hover:text-accentColor transition-all ${style}`}
+      className={`px-5 py-2 border hover:bg-bgColor hover:text-textColor transition-all ${style}`}
       onClick={onclick}
     >
       {children}
