@@ -10,6 +10,7 @@ const CardNews = () => {
   const [filterData, setFilterData] = useState<any>([]);
   const [dataNotFound, setDataNotFound] = useState(false);
   const { data, error, isLoading } = useSWR(`/api/news/${page}`, fetcher);
+  const [isRefresh, setIsRefresh] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -34,16 +35,18 @@ const CardNews = () => {
     setFilterData([]);
     setDataNotFound(false);
     setNewsData([]);
+    setIsRefresh(true);
     setTimeout(() => {
       setNewsData([...data.data.results]);
-    }, 500);
+      setIsRefresh(false);
+    }, 1000);
   };
   const nextNews = () => {
     setPage(page + 1);
   };
   return (
     <section className=" md:pt-20 pt-16">
-      <div className="card pb-3 min-h-screen lg:w-3/6 w-full md:border-2 shadow-md mx-auto">
+      <div className="card min-h-screen lg:w-3/6 w-full md:border-2 shadow-md mx-auto">
         <section className="py-3 md:px-5 px-4 flex justify-between items-center">
           <section className="flex gap-3">
             <h2 className="text-xl font-bold">Latest News</h2>
@@ -67,13 +70,64 @@ const CardNews = () => {
           </section>
         </section>
         <hr className="text-bgColor" />
+
         {newsData && dataNotFound === false && (
           <ContentNews data={filterData.length > 0 ? filterData : newsData} />
         )}
         {dataNotFound && <p className="mt-3 mx-auto text-sm">News Not Found</p>}
-        {isLoading && page === 1 && (
-          <p className="px-4 md:px-5 pt-1">Loading...</p>
-        )}
+        {(isLoading && page === 1) ||
+          (isRefresh && (
+            <section>
+              <section>
+                <h1 className="mx-5 mt-2 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+              <section>
+                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+              <section>
+                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+              <section>
+                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+              <section>
+                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+              <section>
+                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+              <section>
+                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+              <section>
+                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+              <section>
+                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+              <section>
+                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+              <section>
+                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+              <section>
+                <h1 className="mx-5 mt-3 h-5 w-auto skeleton"></h1>
+                <h1 className="mx-5 mt-1 h-3 w-auto skeleton"></h1>
+              </section>
+            </section>
+          ))}
         {filterData.length === 0 &&
           newsData.length > 0 &&
           dataNotFound === false && (
