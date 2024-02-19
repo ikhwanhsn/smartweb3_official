@@ -2,6 +2,7 @@ import { fetcher } from "@/libs/swr/fetcher";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { FaExchangeAlt } from "react-icons/fa";
+import Image from "next/image";
 
 const dataThead = [
   "No",
@@ -28,9 +29,9 @@ const Market = () => {
     if (data) {
       setdataCrypto([...dataCrypto, data]);
     }
-    // if (dataCrypto.length > 0) {
-    //   console.log(dataCrypto[0].data.data);
-    // }
+    if (dataCrypto.length > 0) {
+      console.log(dataCrypto[0].data.data);
+    }
   }, [data]);
   return (
     <table className="table table-auto w-full rounded-md text-base">
@@ -89,9 +90,16 @@ const Market = () => {
                 }`}
               >
                 <td>{item.cmc_rank}.</td>
-                <td>
+                <td className="flex items-center gap-2">
+                  <Image
+                    src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${item.id}.png`}
+                    alt={item.name}
+                    width={28}
+                    height={28}
+                    className="rounded-full"
+                  />
                   {item.name}
-                  <span className="ml-1 text-gray-400">{item.symbol}</span>
+                  <span className=" text-gray-400">{item.symbol}</span>
                 </td>
                 <td>${formatCurrency(item.quote.USD.price)}</td>
                 <td>${formatCurrency(item.quote.USD.market_cap)}</td>
