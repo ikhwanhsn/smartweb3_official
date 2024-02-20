@@ -46,12 +46,16 @@ const dataActiveMenu = [
 const ButtonMenuAnalysis = () => {
   const [isActiveButton, setIsActiveButton] = useState("Market");
   return (
-    <section>
-      <section className="mt-3 flex justify-center">
+    <section className="relative">
+      <section className="mt-3 flex justify-center sticky top-16 pt-4 z-20 w-full bg-white">
         {dataButton.map((item) => (
           <ButtonMenu
             key={item}
-            style={isActiveButton === item ? "bg-bgColor text-textColor" : ""}
+            style={
+              isActiveButton === item
+                ? "bg-bgColor text-textColor"
+                : "bg-white text-bgColor"
+            }
             onclick={() => setIsActiveButton(item)}
           >
             {item}

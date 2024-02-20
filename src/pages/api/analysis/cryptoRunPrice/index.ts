@@ -16,7 +16,7 @@ export default async function handler(
       // "https://pro-api.coinmarketcap.com/v1/cryptocurrency/categories",
       // "https://pro-api.coinmarketcap.com/v1/cryptocurrency/category?id=605e2ce9d41eae1066535f7c",
       // "https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?limit=55&sort=cmc_rank",
-      "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=100",
+      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=100&start=1`,
       // "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest",
       {
         headers: {
