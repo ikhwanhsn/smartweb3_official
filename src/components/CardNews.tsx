@@ -31,6 +31,7 @@ const CardNews = () => {
   };
 
   const handleRefresh = () => {
+    (document.getElementById("search") as HTMLInputElement).value = "";
     setPage(1);
     setFilterData([]);
     setDataNotFound(false);
@@ -45,9 +46,10 @@ const CardNews = () => {
     setPage(page + 1);
   };
   return (
-    <section className=" md:pt-20 pt-16">
-      <div className="card min-h-screen lg:w-3/6 w-full md:border-2 shadow-md mx-auto">
-        <section className="py-3 md:px-5 px-4 flex justify-between items-center">
+    <section className="bg-gray-50">
+      <section className="w-full h-20 bg-gray-50 sticky top-4 z-20"></section>
+      <div className="card min-h-screen bg-white lg:w-3/6 w-full mx-auto">
+        <section className="rounded-xl py-3 md:px-5 px-4 flex justify-between items-center sticky top-20 bg-white z-30 shadow-sm">
           <section className="flex gap-3">
             <h2 className="text-xl font-bold">Latest News</h2>
             <button
@@ -64,12 +66,13 @@ const CardNews = () => {
               type="search"
               placeholder="Search news..."
               onChange={(e) => inputFilter(e)}
+              id="search"
               className="input input-bordered input-bgColor  shadow-sm input-sm w-full max-w-xs"
             />
             <BsFilter className="scale-[2] cursor-pointer hover:opacity-70" />
           </section>
         </section>
-        <hr className="text-bgColor" />
+        {/* <hr className="text-bgColor" /> */}
 
         {newsData && dataNotFound === false && (
           <ContentNews data={filterData.length > 0 ? filterData : newsData} />

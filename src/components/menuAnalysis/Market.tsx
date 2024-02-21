@@ -168,19 +168,21 @@ const Market = () => {
             })}
         </tbody>
       </table>
-      <section className="flex gap-1 items-center justify-center mt-5 pb-3">
-        <button className={`btn btn-sm`} disabled>
-          Prev
-        </button>
-        <div className="join">
-          <button className="join-item btn btn-sm">1</button>
-          <button className="join-item btn btn-sm">2</button>
-          <button className="join-item btn btn-sm btn-disabled">...</button>
-          <button className="join-item btn btn-sm">99</button>
-          <button className="join-item btn btn-sm">100</button>
-        </div>
-        <button className={`btn btn-sm`}>Next</button>
-      </section>
+      {!isLoading && dataCrypto.length > 0 && (
+        <section className="flex gap-1 items-center justify-center mt-5 pb-3">
+          <button className={`btn btn-sm`} disabled>
+            Prev
+          </button>
+          <div className="join">
+            <button className="join-item btn btn-sm">1</button>
+            <button className="join-item btn btn-sm">2</button>
+            <button className="join-item btn btn-sm btn-disabled">...</button>
+            <button className="join-item btn btn-sm">99</button>
+            <button className="join-item btn btn-sm">100</button>
+          </div>
+          <button className={`btn btn-sm`}>Next</button>
+        </section>
+      )}
     </>
   );
 };

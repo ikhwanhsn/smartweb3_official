@@ -47,7 +47,7 @@ const ButtonMenuAnalysis = () => {
   const [isActiveButton, setIsActiveButton] = useState("Market");
   return (
     <section className="relative">
-      <section className="mt-3 flex justify-center sticky top-16 pt-4 z-20 w-full bg-white">
+      <section className=" flex justify-center sticky top-16 pt-4 z-20 w-full bg-white">
         {dataButton.map((item) => (
           <ButtonMenu
             key={item}
